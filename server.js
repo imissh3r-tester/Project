@@ -10,20 +10,21 @@ const dbconfig = {
     trustServerCertificate: true
   }
 };
+let poolPromise = sql.connect(dbconfig)
+  .then(pool => {
+    console.log('Kết nối SQL thành công');
+    return pool;
+  })
+  .catch(err => {
+    console.error('Kết nối SQL thất bại:', err);
+    process.exit(1);
+  });
 const app = express();
 const PORT = 3000;
 app.get('/submit', (req, res) => {
   res.sendFile(path.join(__dirname, 'submit.html'));
 });
-app.get('/search', (req, res) => {
-  const ip = req.ip;
-  if (req.ip === '::1' || req.ip === '127.0.0.1' || req.ip === '::ffff:127.0.0.1') {
-    res.sendFile(path.join(__dirname, 'search.html'));
-  } else {
-    res.status(403).send('Bạn không có quyền truy cập trang này.');
-  }
-});
-app.use('/static', express.static(path.join(__dirname)));
+app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
@@ -32,22 +33,31 @@ app.get('/', (req, res) => {
 app.post('/api/submit', async (req, res) => {
     const { name, age, gender, ID, phone, address, building, floor, room, bed } = req.body;
     try {
-        await sql.connect(dbconfig);
-        await sql.query`
+      const pool = await poolPromise;
+      await pool.request()
+      .input('name', sql.NVarChar(100), name)
+      .input('age', sql.Int, age ? parseInt(age, 10) : null)
+      .input('gender', sql.NVarChar(10), gender)
+      .input('idcard', sql.NVarChar(50), ID)
+      .input('phone', sql.NVarChar(50), phone)
+      .input('address', sql.NVarChar(255), address)
+      .input('building', sql.NVarChar(10), building)
+      .input('floor', sql.NVarChar(10), floor)
+      .input('room', sql.NVarChar(10), room)
+      .input('bed', sql.NVarChar(50), bed)
+      .query(`
             INSERT INTO [BệnhNhân] ([Tên], [Tuổi], [GiớiTính], [CMND_CCCD], [SĐT], [ĐịaChỉ], [TòaNhà], [Tầng], [Phòng], [Giường])
-            VALUES (${name}, ${age}, ${gender}, ${ID}, ${phone}, ${address}, ${building}, ${floor}, ${room}, ${bed})
-        `;
+            VALUES (@name, @age, @gender, @idcard, @phone, @address, @building, @floor, @room, @bed)
+        `);
         res.json({ success: true, message: 'Đã lưu thành công!' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Lỗi khi lưu!' });
-    } finally {
-        sql.close();
-    }
+    console.error('Lỗi khi lưu:', error);
+    res.status(500).json({ success: false, message: 'Lỗi khi lưu!' });
+  }
 });
 app.get('/api/patients', async (req, res) => {
   try {
-    let pool = await sql.connect(dbconfig);
+    let pool = await poolPromise;
     let result = await pool.request().query("SELECT * FROM BệnhNhân");
     res.json(result.recordset);
   } catch (err) {
@@ -58,7 +68,7 @@ app.get('/api/patients', async (req, res) => {
 app.get('/api/find-patient', async (req, res) => {
   const { name, age, gender } = req.query;
   try {
-    let pool = await sql.connect(dbconfig);
+    let pool = await poolPromise;
     let query = `
       SELECT TOP 1 *
       FROM [BệnhNhân]
@@ -85,11 +95,9 @@ app.post('/api/toggle-light', async (req, res) => {
     const fetch = require('node-fetch');
     const { building, floor, room, bed } = req.body;
     console.log(`Yêu cầu bật/tắt đèn: ${building} - ${floor} - ${room} - ${bed}`);
-
     if (!esp32_ip) {
       return res.status(500).json({ message: 'ESP32 IP chưa được đăng ký.' });
     }
-
     await fetch(`http://${esp32_ip}/toggle`, { // IP của esp32
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -100,12 +108,11 @@ app.post('/api/toggle-light', async (req, res) => {
 app.post('/api/discharge', async (req, res) => {
   const { id, discharge_datetime } = req.body;
   try {
-    let pool = await sql.connect(dbconfig);
+    let pool = await poolPromise;
     await pool.request()
       .input('id', sql.Int, id)
       .input('discharge_datetime', sql.DateTime, new Date(discharge_datetime))
       .query(`UPDATE [BệnhNhân] SET [NgàyXuấtViện] = @discharge_datetime WHERE [id] = @id`);
-
     res.json({ message: 'Đã ghi nhận ngày xuất viện cho bệnh nhân.' });
   } catch (error) {
     console.error('Lỗi khi nhập ngày xuất viện:', error);
@@ -121,9 +128,24 @@ app.post('/api/register-esp32', (req, res) => {
   console.log('ESP32 registered with IP:', esp32_ip);
   res.json({ success: true });
 });
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server chạy tại http://localhost:3000`); // IP của thiết bị host server
+// search.html chỉ cho phép mở từ localhost
+app.get('/search', (req, res) => {
+  const clientIp = req.socket.remoteAddress;
+  if (clientIp === '::1' || clientIp === '127.0.0.1' || clientIp === '::ffff:127.0.0.1') {
+    res.sendFile(path.join(__dirname, 'search.html'));
+  } else {
+    res.status(403).send('Bạn không có quyền truy cập trang này.');
+  }
 });
+process.on('SIGINT', async () => {
+  console.log('Đóng kết nối SQL...');
+  await sql.close();
+  process.exit(0);
+});
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server chạy tại http://<IP_public>:3000`); // IP của router
+});
+
 
 
 
