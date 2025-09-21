@@ -1,0 +1,174 @@
+.form-container {
+    max-width: 360px;
+    width: 80%;
+    padding: 16px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+@media (max-width: 480px) {
+    .form-container {
+        padding: 16px 8px;
+        width: 95%;
+        max-width: none;
+    }
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fb;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h1, h2, legend {
+    color: #2d3a4a;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+}
+legend {
+    font-size: 1.2em;
+    margin-bottom: 12px;
+}
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    color: #444;
+    font-size: 1em;
+}
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #bfc9d1;
+    border-radius: 6px;
+    font-size: 1em;
+    background: #f9fafb;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+input:focus, select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+.radio-group {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+}
+.radio-label {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+.radio-label input[type="radio"] {
+    margin-right: 6px;
+    margin-left: 0;
+}
+button, input[type="submit"] {
+    margin-top: 24px;
+    width: 100%;
+    padding: 12px 0;
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button:hover, input[type="submit"]:hover {
+    background: #357ab8;
+}
+.hidden {
+    display: none !important;
+}
+.error-message {
+    color: #d32f2f;
+    background: #fff0f0;
+    border: 1px solid #f8bcbc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 0.98em;
+    text-align: center;
+}
+#ID { 
+    width: 60%;
+    min-width: 100px;
+    max-width: 150px;
+    margin: 0 auto;
+    height: 30px;
+    font-size: 1em;
+}
+#ID::placeholder {
+    font-size: 0.95em;
+    align-items: auto;
+}
+#phone, #cccd, #age {
+    height: 40px;
+    font-size: 1em;
+}
+#phone, #cccd {
+    min-width: 120px;
+    max-width: 200px;
+}
+
+#age {
+    min-width: 60px;
+    width: 80px;
+}
+#cccd {
+    height: 40px;
+    min-width: 120px;
+    max-width: 200px;
+    font-size: 1em;
+    margin: 0;
+    width: auto; /* Prevents it from stretching to 100% */
+}
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    gap: 10px;
+}
+.form-row label {
+    margin: 0;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+.form-row input {
+    margin: 0;
+}
+textarea {
+  width: 100%;           /* Chiều ngang full container */
+  min-height: 40px;      /* Chiều cao tối thiểu */
+  resize: none;          /* Tắt khả năng resize tay */
+  overflow: hidden;      /* Ẩn scroll bar */
+  box-sizing: border-box;/* Bao gồm padding/border trong width */
+  padding: 8px;          /* Padding đẹp */
+  font-size: 16px;
+  line-height: 1.4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
+}

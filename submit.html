@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin bệnh nhân</title>
+    <link rel="stylesheet" href="style-1.css">
+</head>
+<body>
+    <div class="form-container">
+    <h1>Thông tin bệnh nhân</h1>
+    <form novalidate>
+        <fieldset>
+            <legend>Thông tin cá nhân</legend>
+            <div class="form-row">
+                <label for="name">Họ và tên:</label>
+                <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
+            </div>
+            <div class="form-row">
+                <label for="age">Tuổi:</label>
+                <input type="number" id="age" name="age" placeholder="Tuổi" required>
+            </div>
+            <div class="form-row">
+                <label for="gender">Giới tính:</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="gender" value="Male" required> Nam
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="gender" value="Female" required> Nữ
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="gender" value="Other" required> Khác
+                    </label>
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="ID">Số CMND/CCCD:</label>
+                <input type="text" id="ID" name="ID" placeholder="CCCD">
+            </div>
+            <div class="form-row">
+                <label for="phone">Số điện thoại:</label>
+                <input type="text" id="phone" name="phone" placeholder="Số điện thoại">
+            </div>  
+            <div class="form-row">
+                <label for="address">Địa chỉ:</label>
+                <textarea id="address" name="address" placeholder="Nhập địa chỉ..." rows="1" required></textarea>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Thông tin nhập viện</legend>
+            <div id="q2Wrap" class="group">
+                <label for="q2">Chọn tòa</label>
+                <select id="q2" name="building" required>
+                    <option value="">-- Chọn tòa --</option>
+                </select>
+            </div>
+            <div id="q3Wrap" class="group">
+                <label for="q3">Chọn tầng</label>
+                <select id="q3" name="floor">
+                    <option value="">-- Chọn tầng --</option>
+                </select>
+            </div>
+            <div id="q4Wrap" class="group">
+                <label for="q4">Chọn phòng</label>
+                <select id="q4" name="room">
+                    <option value="">-- Chọn phòng --</option>
+                </select>
+            </div>
+            <div id="q5Wrap" class="group">
+                <label for="q5">Chọn giường</label>
+                <select id="q5" name="bed">
+                    <option value="">-- Chọn giường --</option>
+                </select>
+            </div>
+        </fieldset>
+        <button type="submit">Gửi</button>
+    </form>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
