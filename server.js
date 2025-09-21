@@ -120,7 +120,8 @@ app.post('/api/register-esp32', (req, res) => {
   console.log('ESP32 registered with IP:', esp32_ip);
   res.json({ success: true });
 });
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server chạy tại http://localhost:3000`); // IP của thiết bị host server
 });
+
 
