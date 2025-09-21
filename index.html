@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tìm kiếm bệnh nhân</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center; /* center form horizontally */
+      align-items: center;     /* center form vertically */
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    form {
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8em;
+      padding: 1.5em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"],
+    select,
+    button {
+      padding: 1em;
+      font-size: 1.1em;
+    }
+    fieldset {
+      border: 1px solid #ccc;
+      padding: 0.5em 1em;
+    }
+    #patientInfo {
+      margin-top: 1em;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    /* QR code fixed bottom-right */
+    #qrcode-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #qr-caption {
+      text-align: center;
+      font-size: 0.75em;
+      margin-top: 0.3em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <form id="searchPatient">
+    <!-- Tên -->
+    <label for="searchName">Tên:</label>
+    <input type="text" id="searchName" name="name" placeholder="Nguyễn Văn A" autocomplete="name" required>
+
+    <!-- Tuổi -->
+    <label for="searchAge">Tuổi:</label>
+    <select id="searchAge" name="age">
+      <option value="">Chọn tuổi</option>
+    </select>
+
+    <!-- Giới tính -->
+    <fieldset>
+      <legend>Giới tính:</legend>
+      <label><input type="radio" name="searchGender" value="male"> Nam</label>
+      <label><input type="radio" name="searchGender" value="female"> Nữ</label>
+      <label><input type="radio" name="searchGender" value="other"> Khác</label>
+    </fieldset>
+
+    <!-- Địa chỉ -->
+    <label for="searchAddress">Địa chỉ:</label>
+    <input type="text" id="searchAddress" name="address" placeholder="Thành phố, quận, phường" autocomplete="address-level2">
+
+    <!-- Thông tin giường, tầng, tòa nhà -->
+    <label for="bed">Số giường:</label>
+    <select id="bed" name="bed">
+      <option value="">Chọn giường</option>
+    </select>
+
+    <label for="floor">Tầng:</label>
+    <select id="floor" name="floor">
+      <option value="">Chọn tầng</option>
+    </select>
+
+    <label for="building">Tòa nhà:</label>
+    <select id="building" name="building">
+      <option value="">Chọn tòa nhà</option>
+    </select>
+
+    <button type="submit">Tìm bệnh nhân</button>
+
+    <!-- Kết quả tìm kiếm -->
+    <section id="patientInfo" style="display:none;" aria-live="polite">
+      <p id="infoText"></p>
+      <button id="toggleLight" type="button">Bật/Tắt đèn</button>
+    </section>
+  </form>
+
+  <!-- QR Code ở góc phải dưới -->
+  <div id="qrcode-container">
+    <div id="qrcode"></div>
+    <div id="qr-caption">Quét mã</div>
+  </div>
+
+  <script>
+    // Tuổi: 0 - 120
+    const ageSelect = document.getElementById("searchAge");
+    for (let i = 0; i <= 120; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = i;
+      ageSelect.appendChild(option);
+    }
+
+    // Giường: 1 - 50
+    const bedSelect = document.getElementById("bed");
+    for (let i = 1; i <= 50; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `Giường ${i}`;
+      bedSelect.appendChild(option);
+    }
+
+    // Tầng: 1 - 10
+    const floorSelect = document.getElementById("floor");
+    for (let i = 1; i <= 10; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `Tầng ${i}`;
+      floorSelect.appendChild(option);
+    }
+
+    // Tòa nhà: A - K
+    const buildingSelect = document.getElementById("building");
+    for (let i = 65; i <= 75; i++) { // ASCII 65 = A, 75 = K
+      const letter = String.fromCharCode(i);
+      const option = document.createElement("option");
+      option.value = letter;
+      option.textContent = `Tòa ${letter}`;
+      buildingSelect.appendChild(option);
+    }
+  </script>
+
+  <!-- Thư viện QRCode.js -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script>
+    // QR code cố định trỏ đến website
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://benhvienabc.netlify.app", // 👉 đổi sang link website thật
+      width: 100,  // giảm còn 1/2
+      height: 100
+    });
+  </script>
+</body>
+</html>
