@@ -8,7 +8,7 @@ const char* serverUrl = "http://<your-server-ip>:3000/api/register-esp32"; // IP
 
 #define relayPin 3 
 
-const char* serverName = "http://192.168.1.100:3000/control?/bed=Giường1"; // IP của esp32
+const char* serverName = "http://<ip-esp32>:3000/control?/bed=Giường1"; // IP của esp32
 
 void setup() {
   Serial.begin(115200);
