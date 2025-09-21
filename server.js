@@ -12,7 +12,17 @@ const dbconfig = {
 };
 const app = express();
 const PORT = 3000;
-app.use(express.static(path.join(__dirname)));
+app.get('/submit', (req, res) => {
+  res.sendFile(path.join(__dirname, 'submit.html'));
+});
+app.get('/search', (req, res) => {
+  if (req.ip === '::1' || req.ip === '127.0.0.1') {
+    res.sendFile(path.join(__dirname, 'search.html'));
+  } else {
+    res.status(403).send('Bạn không có quyền truy cập trang này.');
+  }
+});
+app.use('/static', express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
@@ -113,3 +123,4 @@ app.post('/api/register-esp32', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server chạy tại http://localhost:3000`); // IP của thiết bị host server
 });
+
