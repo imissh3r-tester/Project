@@ -129,8 +129,10 @@ button:hover, input[type="submit"]:hover {
 }
 
 #age {
-    min-width: 60px;
-    width: 80px;
+    height: 40px;
+    font-size: 1em;
+    min-width: 80px;
+    width: auto;
 }
 #cccd {
     height: 40px;
@@ -171,4 +173,5 @@ textarea {
 textarea:focus {
   border-color: #4a90e2;
   outline: none;
+
 }
