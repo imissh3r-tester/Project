@@ -24,7 +24,6 @@ const PORT = 3000;
 app.get('/submit', (req, res) => {
   res.sendFile(path.join(__dirname, 'submit.html'));
 });
-app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
@@ -145,6 +144,7 @@ process.on('SIGINT', async () => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server chạy tại http://<IP_public>:3000`); // IP của router
 });
+
 
 
 
