@@ -3,6 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const q3 = document.getElementById('q3');
     const q4 = document.getElementById('q4');
     const q5 = document.getElementById('q5');
+    const ageSelect = document.getElementById("age");
+    if (ageSelect) {
+        const maxAge = 120;
+        for (let i = 1; i <= maxAge; i++) {
+            const opt = document.createElement("option");
+            opt.value = i;
+            opt.textContent = i;
+            ageSelect.appendChild(opt);
+        }
+    }
     document.querySelector('form').addEventListener('submit', function(e) {
         e.preventDefault();
         const name = document.getElementById('name').value;
@@ -97,3 +107,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
