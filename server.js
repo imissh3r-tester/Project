@@ -151,9 +151,10 @@ process.on('SIGINT', async () => {
   await sql.close();
   process.exit(0);
 });
-app.listen(PORT, '127.0.0.1', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server chạy tại http://192.168.55.102:3000`);
 });
+
 
 
 
