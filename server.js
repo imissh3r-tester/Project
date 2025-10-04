@@ -1,13 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const sql = require('mssql');
 const dbconfig = {
-  user: 'your_username',
-  password: 'your_password',
+  user: 'Manager',
+  password: '12345678',
   server: 'localhost',
   database: 'HospitalDB',
   options: {
     trustServerCertificate: true
+    encrypt: false
   }
 };
 let poolPromise = sql.connect(dbconfig)
@@ -145,6 +147,7 @@ process.on('SIGINT', async () => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server chạy tại http://<IP_public>:3000`); // IP của router
 });
+
 
 
 
