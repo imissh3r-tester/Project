@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Vui lòng chọn giới tính");
                 return;
             }
-        const gender = genderInput.value'
+        const gender = genderInput.value;
         const ID = document.getElementById('ID').value;
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
@@ -112,5 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
 
 
