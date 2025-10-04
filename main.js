@@ -17,7 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const name = document.getElementById('name').value;
         const age = parseInt(document.getElementById('age').value, 10);
-        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const genderInput = document.querySelector('input[name="gender"]:checked');
+            if (!genderInput) {
+                alert("Vui lòng chọn giới tính");
+                return;
+            }
+        const gender = genderInput.value'
         const ID = document.getElementById('ID').value;
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
@@ -25,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const floor = q3.value;
         const room = q4.value;
         const bed = q5.value;
-        if (!name || !age || !gender || !address || !building || !floor || !room || !bed) {
+        if (!name || !age || !address || !building || !floor || !room || !bed) {
             alert("Vui lòng điền đầy đủ thông tin."); 
             return;
         }
@@ -107,4 +112,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
 
