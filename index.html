@@ -24,10 +24,16 @@
                 </select>
             </div>
             <div class="form-row">
-                <label for="gender">Giới tính:</label>
-                        <input type="radio" name="gender" value="Male" required> Nam
-                        <input type="radio" name="gender" value="Female" required> Nữ
-                        <input type="radio" name="gender" value="Other" required> Khác
+                <span>Giới tính:</span>
+                <label for="gender_male">Nam</label>
+                    <input type="radio" id="gender_male" name="gender" value="Male" required>
+                </label>
+                <label for="gender_female">Nữ</label>
+                    <input type="radio" id="gender_female" name="gender" value="Female" required>
+                </label>
+                <label for="gender_other">
+                    <input type="radio" id="gender_other" name="gender" value="Other" required>
+                </label>
             </div>
             <div class="form-row">
                 <label for="ID">Số CMND/CCCD:</label>
@@ -76,6 +82,7 @@
 </body>
 
 </html>
+
 
 
 
