@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Vui lòng điền đầy đủ thông tin."); 
             return;
         }
-        fetch('/api/submit', { // IP của thiết bị host server
+        fetch('http://localhost:3000/api/submit', { // IP của thiết bị host server
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
 
 
 
