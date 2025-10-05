@@ -3,20 +3,14 @@ const express = require('express');
 const path = require('path');
 const sql = require('mssql');
 const dbconfig = {
-  server: 'localhost',
+  server: 'DESKTOP-8RI0V8D',
   database: 'HospitalDB',
+  user: 'sa',
+  password: '123456',
   options: {
     trustServerCertificate: true,
     encrypt: false
   },
-  authentication: {
-    type: 'ntlm',
-    options: {
-      domain: "",
-      userName: "",
-      password: ""
-    }
-  }
 };
 const poolPromise = sql.connect(dbconfig)
   .then(pool => {
@@ -154,6 +148,7 @@ process.on('SIGINT', async () => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server chạy tại http://192.168.55.102:3000`);
 });
+
 
 
 
