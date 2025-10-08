@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tìm kiếm bệnh nhân</title>
+  <link rel="stylesheet" href="/static/style-2.css">
+  <link rel="icon" href="/static/favicon.ico.png" type="image/png">
+</head>
+<body>
+  <h1>Tìm kiếm bệnh nhân</h1>
+  <form id="searchPatient">
+    <label for="searchName">Họ và Tên:</label>
+    <input type="text" id="searchName" name="name" autocomplete="on" required>
+    <label for="searchAge">Tuổi:</label>
+    <input type="number" id="searchAge" name="age">
+    <span>Giới tính:</span>
+    <div class="radio-group">
+      <label class="radio-label">
+        <input type="radio" name="searchGender" value="Male" autocomplete="off" />Nam
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="searchGender" value="Female" autocomplete="off" />Nữ
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="searchGender" value="Other" autocomplete="off" />Khác
+      </label>
+    </div>
+    <button type="submit">Tìm bệnh nhân</button>
+  </form>
+  <h2>Danh sách bệnh nhân</h2>
+  <div id="patientContainer" class="patient-container">
+  </div>
+  <div id="patientInfo" class="hidden">
+    <p id="infoText"></p>
+    <div class="button-group">
+      <button id="toggleLight" type="button">Định vị</button>
+      <button id="deletePatient" type="button" class="delete-button">Xóa bệnh nhân</button>
+    </div>
+  </div>
+  <script src="/static/locate.js"></script>
+</body>
+</html>
+
